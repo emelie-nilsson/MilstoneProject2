@@ -3,6 +3,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const restartbtn = document.getElementById("restart_btn");
     const moveCounter = document.getElementById("move_counter");
     const timer = document.getElementById("timer");
+
+    let flippedCards = [];
+    let moves = 0;
+    let lockBoard = false;
   
     // List with the images
     const images = [
@@ -33,10 +37,46 @@ document.addEventListener("DOMContentLoaded", () => {
       const img = document.createElement("img");
       img.src = imgSrc;
       img.alt = "Farm animal";
-      img.style.display = "none"; // Gömmer bilden tills den vänds
+      // Hides the image
+      img.style.display = "none"; 
+      card.addEventListener("click", () => {
+        if (lockBoard || img.style.display === "block" || card.classList.contains("matched")) return;
+      
+        // Show the image
+        img.style.display = "block"; 
+      
+        // Save the choosen card
+        flippedCards.push({ card, img });
+      
+        if (flippedCards.length === 2) {
+            lockBoard = true;
+          setTimeout(checkMatch, 800);
+        }
+      });
   
       card.appendChild(img);
       grid.appendChild(card);
     });
+    function checkMatch() {
+        const [first, second] = flippedCards;
+      
+        if (first.img.src === second.img.src) {
+          // It's a match!
+          first.card.classList.add("matched");
+          second.card.classList.add("matched");
+        } else {
+          // If not a match, turn back the cards
+          first.img.style.display = "none";
+          second.img.style.display = "none";
+        }
+      
+        // Clear array
+        flippedCards = [];
+      
+        // Count moves
+        moves++;
+        moveCounter.textContent = moves;
+        lockBoard = false;
+      }
   });
   
