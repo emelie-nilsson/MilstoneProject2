@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--Title-->
-    <title>Furry Friends on a Farm!</title>
+    <title>Match the Farms Fury Friends!</title>
     <!--Favicon-->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
@@ -15,11 +15,19 @@
       <!--Link CSS stylesheet-->
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
+<!--Main content-->
 <body>
-    <h1>Match the Farms Fury Friends!</h1>
-    <h2>Introduction</h2>
-    <h3>Game</h3>
-
+  <div class="game-container">
+    <div class="title">Match the Farms Fury Friends</div>
+    <div class="game-grid">
+    </div>
+    <div class="game_info">
+      <p>Moves: <span id="move_counter">0</span></p>
+      <p>Time: <span id="timer"00:00></span></p>
+    </div>
+    <button id="restart_btn">Restart Game</button>
+  </div>
+  
      <!--Bootstrap JS script-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
