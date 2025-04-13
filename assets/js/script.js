@@ -28,11 +28,25 @@ document.addEventListener("DOMContentLoaded", () => {
     "assets/image/sheep.jpg"
   ];
 
+  // Map image filenames to sound file paths
+  const soundMap = {
+    "cat.jpg": "assets/sounds/cat.mp3",
+    "chick.jpg": "assets/sounds/chick.mp3",
+    "cow.jpg": "assets/sounds/cow.mp3",
+    "dog.jpg": "assets/sounds/dog.mp3",
+    "duck.jpg": "assets/sounds/duck.mp3",
+    "goat.jpg": "assets/sounds/goat.mp3",
+    "horse.jpg": "assets/sounds/horse.mp3",
+    "pig.jpg": "assets/sounds/pig.mp3",
+    "rooster.jpg": "assets/sounds/rooster.mp3",
+    "sheep.jpg": "assets/sounds/sheep.mp3"
+  };
+
   // Use first 10 images and duplicate to make pairs (total 20 cards)
   const selectedImages = images.slice(0, 10);
   let cards = [...selectedImages, ...selectedImages];
 
-  // Timer function, updates every second
+  // Timer function
   function startTimer() {
     interval = setInterval(() => {
       seconds++;
@@ -47,23 +61,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const [first, second] = flippedCards;
 
     if (first.img.src === second.img.src) {
-      // It's a match!
+      // Match found
       first.card.classList.add("matched");
       second.card.classList.add("matched");
       matchedPairs++;
 
-      // Check if all pairs are matched
       if (matchedPairs === 10) {
         clearInterval(interval);
         document.getElementById("winModal").style.display = "block";
       }
     } else {
-      // Not a match – hide both images
-      first.img.style.display = "none";
-      second.img.style.display = "none";
+      // Not a match
+      setTimeout(() => {
+        first.img.style.display = "none";
+        second.img.style.display = "none";
+      }, 300);
     }
 
-    // Reset for next turn
+    // Reset for next move
     flippedCards = [];
     moves++;
     moveCounter.textContent = moves;
@@ -84,27 +99,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Handle card click
       card.addEventListener("click", () => {
-        // Don't allow clicking if the board is locked, card already flipped, or matched
         if (lockBoard || img.style.display === "block" || card.classList.contains("matched")) return;
 
-        // Start timer on first click
         if (!timerStarted) {
           timerStarted = true;
           startTimer();
         }
 
-        // Show the card image
         img.style.display = "block";
         flippedCards.push({ card, img });
 
-        // If two cards are flipped, check for match
+        // Play animal sound
+        const fileName = img.src.split("/").pop();
+        const soundPath = soundMap[fileName];
+        if (soundPath) {
+          const sound = new Audio(soundPath);
+          sound.play();
+        }
+
         if (flippedCards.length === 2) {
           lockBoard = true;
-          setTimeout(checkMatch, 800); // Wait before checking
+          setTimeout(checkMatch, 800);
         }
       });
 
-      // Add image to card, and card to grid
       card.appendChild(img);
       grid.appendChild(card);
     });
@@ -112,39 +130,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Reset the whole game
   function resetGame() {
-    // Reset timer
     clearInterval(interval);
     seconds = 0;
     timer.textContent = "00:00";
     timerStarted = false;
-
-    // Reset game state
     matchedPairs = 0;
     moves = 0;
     moveCounter.textContent = "0";
     flippedCards = [];
     lockBoard = false;
 
-    // Shuffle cards again
+    // Shuffle and rebuild
     cards.sort(() => Math.random() - 0.5);
-
-    // Clear the game board
     grid.innerHTML = "";
-
-    // Build a fresh set of cards
     createCards();
 
-    // Hide win modal if visible
+    // Hide win modal
     document.getElementById("winModal").style.display = "none";
   }
 
-  // Restart button listener
+  // Restart button
   restartbtn.addEventListener("click", resetGame);
 
-  // Start game automatically when page loads
+  // Start game on page load
   resetGame();
 
-  // Close modal when X is clicked
+  // Close modal with X button
   document.getElementById("closeModal").addEventListener("click", () => {
     document.getElementById("winModal").style.display = "none";
   });
