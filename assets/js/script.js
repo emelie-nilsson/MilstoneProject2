@@ -37,13 +37,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const img = document.createElement("img");
       img.src = imgSrc;
       img.alt = "Farm animal";
-      // Hides the image
-      img.style.display = "none"; 
       card.addEventListener("click", () => {
         if (lockBoard || img.style.display === "block" || card.classList.contains("matched")) return;
       
         // Show the image
-        img.style.display = "block"; 
+        card.classList.add("show");
       
         // Save the choosen card
         flippedCards.push({ card, img });
@@ -66,8 +64,8 @@ document.addEventListener("DOMContentLoaded", () => {
           second.card.classList.add("matched");
         } else {
           // If not a match, turn back the cards
-          first.img.style.display = "none";
-          second.img.style.display = "none";
+          first.card.classList.remove("show");
+          second.card.classList.remove("show");
         }
       
         // Clear array
