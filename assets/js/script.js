@@ -1,80 +1,136 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const grid = document.querySelector(".game_grid");
-    const restartbtn = document.getElementById("restart_btn");
-    const moveCounter = document.getElementById("move_counter");
-    const timer = document.getElementById("timer");
+  // DOM elements
+  const grid = document.querySelector(".game_grid");
+  const restartbtn = document.getElementById("restart_btn");
+  const moveCounter = document.getElementById("move_counter");
+  const timer = document.getElementById("timer");
 
-    let flippedCards = [];
-    let moves = 0;
-    let lockBoard = false;
-  
-    // List with the images
-    const images = [
-      "assets/image/cat.jpg",
-      "assets/image/chick.jpg",
-      "assets/image/cow.jpg",
-      "assets/image/dog.jpg",
-      "assets/image/duck.jpg",
-      "assets/image/goat.jpg",
-      "assets/image/horse.jpg",
-      "assets/image/pig.jpg",
-      "assets/image/rooster.jpg",
-      "assets/image/sheep.jpg"
-    ];
-  
-    // 10 cards x2 = 20 cards total
-    const selectedImages = images.slice(0, 10);
-    let cards = [...selectedImages, ...selectedImages];
-  
-    // Shuffle the cards
-    cards.sort(() => Math.random() - 0.5);
-  
-    // Create the cards
+  // Game state variables
+  let flippedCards = [];
+  let moves = 0;
+  let lockBoard = false;
+  let seconds = 0;
+  let interval;
+  let timerStarted = false;
+
+  // Array of image paths
+  const images = [
+    "assets/image/cat.jpg",
+    "assets/image/chick.jpg",
+    "assets/image/cow.jpg",
+    "assets/image/dog.jpg",
+    "assets/image/duck.jpg",
+    "assets/image/goat.jpg",
+    "assets/image/horse.jpg",
+    "assets/image/pig.jpg",
+    "assets/image/rooster.jpg",
+    "assets/image/sheep.jpg"
+  ];
+
+  // Use first 10 images and duplicate to make pairs (total 20 cards)
+  const selectedImages = images.slice(0, 10);
+  let cards = [...selectedImages, ...selectedImages];
+
+  // Timer function, updates every second
+  function startTimer() {
+    interval = setInterval(() => {
+      seconds++;
+      const mins = String(Math.floor(seconds / 60)).padStart(2, "0");
+      const secs = String(seconds % 60).padStart(2, "0");
+      timer.textContent = `${mins}:${secs}`;
+    }, 1000);
+  }
+
+  // Check if the two flipped cards match
+  function checkMatch() {
+    const [first, second] = flippedCards;
+
+    if (first.img.src === second.img.src) {
+      // Match found
+      first.card.classList.add("matched");
+      second.card.classList.add("matched");
+    } else {
+      // Not a match: hide images again
+      first.img.style.display = "none";
+      second.img.style.display = "none";
+    }
+
+    // Reset for next move
+    flippedCards = [];
+    moves++;
+    moveCounter.textContent = moves;
+    lockBoard = false;
+  }
+
+  // Create all cards and add to game board
+  function createCards() {
     cards.forEach((imgSrc) => {
       const card = document.createElement("div");
       card.classList.add("card");
-  
+
       const img = document.createElement("img");
       img.src = imgSrc;
       img.alt = "Farm animal";
+      img.style.display = "none";
+      img.classList.add("card-image");
+
+      // Handle card click
       card.addEventListener("click", () => {
+        // Don't allow clicking if the board is locked, card already flipped, or matched
         if (lockBoard || img.style.display === "block" || card.classList.contains("matched")) return;
-      
-        // Show the image
-        card.classList.add("show");
-      
-        // Save the choosen card
+
+        // Start timer on first click
+        if (!timerStarted) {
+          timerStarted = true;
+          startTimer();
+        }
+
+        // Show the card image
+        img.style.display = "block";
         flippedCards.push({ card, img });
-      
+
+        // If two cards are flipped, check for match
         if (flippedCards.length === 2) {
-            lockBoard = true;
-          setTimeout(checkMatch, 800);
+          lockBoard = true;
+          setTimeout(checkMatch, 800); // Wait before checking
         }
       });
-  
+
+      // Add image to card, and card to grid
       card.appendChild(img);
       grid.appendChild(card);
     });
-    function checkMatch() {
-        const [first, second] = flippedCards;
-      
-        if (first.img.src === second.img.src) {
-          // It's a match!
-          first.card.classList.add("matched");
-          second.card.classList.add("matched");
-        } else {
-          // If not a match, turn back the cards
-          first.card.classList.remove("show");
-          second.card.classList.remove("show");
-        }
-      
-        // Clear array
-        flippedCards = [];
-      
-        // Count moves
-        moves++;
-        moveCounter.textContent = moves;
-        lockBoard = false;
-      }
-  });
-  
+  }
+
+  // Reset the whole game
+  function resetGame() {
+    // Reset timer
+    clearInterval(interval);
+    seconds = 0;
+    timer.textContent = "00:00";
+    timerStarted = false;
+
+    // Reset moves
+    moves = 0;
+    moveCounter.textContent = "0";
+
+    // Clear old cards
+    grid.innerHTML = "";
+
+    // Shuffle cards again
+    cards.sort(() => Math.random() - 0.5);
+
+    // Reset game state
+    flippedCards = [];
+    lockBoard = false;
+
+    // Build a fresh set of cards
+    createCards();
+  }
+
+  // Restart button listener
+  restartbtn.addEventListener("click", resetGame);
+
+  // Start game automatically when page loads
+  resetGame();
+});
