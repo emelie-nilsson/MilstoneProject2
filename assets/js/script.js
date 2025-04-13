@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let seconds = 0;
   let interval;
   let timerStarted = false;
+  let matchedPairs = 0;
 
   // Array of image paths
   const images = [
@@ -46,16 +47,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const [first, second] = flippedCards;
 
     if (first.img.src === second.img.src) {
-      // Match found
+      // It's a match!
       first.card.classList.add("matched");
       second.card.classList.add("matched");
+      matchedPairs++;
+
+      // Check if all pairs are matched
+      if (matchedPairs === 10) {
+        clearInterval(interval);
+        document.getElementById("winModal").style.display = "block";
+      }
     } else {
-      // Not a match: hide images again
+      // Not a match – hide both images
       first.img.style.display = "none";
       second.img.style.display = "none";
     }
 
-    // Reset for next move
+    // Reset for next turn
     flippedCards = [];
     moves++;
     moveCounter.textContent = moves;
@@ -110,22 +118,24 @@ document.addEventListener("DOMContentLoaded", () => {
     timer.textContent = "00:00";
     timerStarted = false;
 
-    // Reset moves
+    // Reset game state
+    matchedPairs = 0;
     moves = 0;
     moveCounter.textContent = "0";
-
-    // Clear old cards
-    grid.innerHTML = "";
+    flippedCards = [];
+    lockBoard = false;
 
     // Shuffle cards again
     cards.sort(() => Math.random() - 0.5);
 
-    // Reset game state
-    flippedCards = [];
-    lockBoard = false;
+    // Clear the game board
+    grid.innerHTML = "";
 
     // Build a fresh set of cards
     createCards();
+
+    // Hide win modal if visible
+    document.getElementById("winModal").style.display = "none";
   }
 
   // Restart button listener
@@ -133,4 +143,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Start game automatically when page loads
   resetGame();
+
+  // Close modal when X is clicked
+  document.getElementById("closeModal").addEventListener("click", () => {
+    document.getElementById("winModal").style.display = "none";
+  });
 });
