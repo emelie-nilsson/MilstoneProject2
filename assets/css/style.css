@@ -23,6 +23,18 @@ body {
   margin: 0;
 }
 
+/* Hero container styling */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background-color: var(--highlight-color) /* ljus bakgrund, går att byta */
+  text-align: center;
+}
+
 /*Welcome image*/
 .welcome-img {
   display: block;
@@ -36,6 +48,34 @@ body {
   .welcome-img {
     max-width: 90%;
   }
+}
+/* Welcome */
+.hero-section h1 {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* introduction */
+.hero-section p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* Audioplayer */
+.hero-section audio {
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Buttons */
+.hero-section .btn {
+  margin: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  border-radius: 12px;
 }
 
 /* Main game container styling */

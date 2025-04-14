@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <div class="container">
+  <div class="container hero-section">
     <img src="assets/image/farm-welcome.jpg" alt="Farm" class="welcome-img" />
     <h1>Welcome to play Memory on Old MacDonald's Farm!</h1>
     <p>Train your memory, listen to animal sounds and have fun!</p>
@@ -26,10 +26,11 @@
       <source src="assets/sounds/old-macdonald-clipped.mp3" type="audio/mpeg" />
       Din webbläsare stödjer inte ljuduppspelning.
     </audio>
-
-    <button onclick="location.href='game.html'">Start Playing</button>
-    <button onclick="location.href='rules.html'">Game rules</button>
+    <div>
+    <button class="btn btn-success" onclick="location.href='game.html'">Start Playing</button>
+    <button class="btn btn-success" onclick="location.href='rules.html'">Game rules</button>
   </div>
+</div>
     <!-- Bootstrap JS bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
