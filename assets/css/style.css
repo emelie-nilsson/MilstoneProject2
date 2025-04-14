@@ -1,18 +1,16 @@
-/* Import Google Fonts */
+/* General*/
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@100..900&family=Roboto:wght@100..900&display=swap');
 
-/* Define CSS variables for reuse */
 :root {
   --primary-font: "Lato", sans-serif;
   --secondary-font: "Roboto", sans-serif;
-  --primary-color: #5c5c7c;          /* grey-blue */
-  --secondary-color: #9e1816;        /* red */
-  --middle-color: #3f6f48;            /* green */
-  --highlight-color: #bba667;        /* yellow-beige */
-  --light-highlight-color: #ebf7f5;  /* light blue background */
+  --primary-color: #5c5c7c;
+  --secondary-color: #9e1816;
+  --middle-color: #3f6f48;
+  --highlight-color: #bba667;
+  --light-highlight-color: #ebf7f5;
 }
 
-/* Set base styles for body */
 body {
   font-family: var(--primary-font);
   color: var(--primary-color);
@@ -22,38 +20,11 @@ body {
   min-height: 100vh;
 }
 
+/* Index */
 .body-index {
   background-color: var(--light-highlight-color);
 }
 
-.body-rules {
-  background-image: url("/assets/image/farm_rules.jpg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: var(--light-highlight-color);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 1rem;
-}
-.rules-container {
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 2rem;
-  border-radius: 20px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-  max-width: 700px;
-  width: 100%;
-  text-align: center;
-  font-family: var(--primary-font)
-  backdrop-filter: blur(5px);
-}
-
-.body-game {
-  background-color: var(--light-highlight-color);
-}
-/* Hero container styling */
 .hero-section {
   min-height: 100vh;
   display: flex;
@@ -65,7 +36,6 @@ body {
   text-align: center;
 }
 
-/*Welcome image*/
 .welcome-img {
   display: block;
   width: 100%;
@@ -73,34 +43,26 @@ body {
   margin: 0 auto 1.5rem;
   border-radius: 20px;
 }
-/*Welcome image small screens*/
 @media (max-width: 576px){
   .welcome-img {
     max-width: 90%;
   }
 }
-/* Welcome */
 .hero-section h1 {
   font-size: 2.2rem;
   font-weight: bold;
   margin-bottom: 1rem;
 }
-
-/* introduction */
 .hero-section p {
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
   color: #333;
 }
-
-/* Audioplayer */
 .hero-section audio {
   margin-bottom: 2rem;
   width: 100%;
   max-width: 400px;
 }
-
-/* Buttons */
 .hero-section .btn {
   margin: 0.5rem;
   padding: 0.75rem 1.5rem;
@@ -108,72 +70,165 @@ body {
   border-radius: 12px;
 }
 
-/*GAME PAGE*/
+/* === GAME === */
+.body-game {
+  background-color: var(--light-highlight-color);
+}
 
-/* Main game container styling */
-  .game-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-    text-align: center;
-  }
-  
-  /* Titeln */
-  .title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    font-weight: bold;
-  }
+.game-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+.title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
 
-/* Grid layout for cards */
+.game_info {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+/* Game grid */
 .game_grid {
   max-width: 600px;
-  margin: 0 auto;
+  margin: 2rem auto;
   display: grid;
   gap: 1rem;
   justify-content: center;
 }
-/*Big screens: 5 columns*/
 @media (min-width: 992px) {
   .game_grid {
     grid-template-columns: repeat(5, 1fr);
   }
 }
-
-/*Smaller screens: 4 columns*/
 @media (max-width: 991px) {
   .game_grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
-
-/* Individual card styling */
 .card {
   aspect-ratio: 1 / 1;
   width: 100%;
   max-width: 120px;
   background-color: #fff;
   border: 2px solid #ccc;
-  border-radius: 12px #3f6f48;
+  border-radius: 12px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  position: relative;
+  cursor: pointer;
 }
-/*Buttons*/
-.game_info {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  display: none;
+}
+.card.flipped {
+  background-color: var(--light-highlight-color);
 }
 
-#restart_btn {
-  padding: 0.6rem 1.5rem;
-  font-size: 1.1rem;
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.modal-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
   border-radius: 10px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 0 10px var(--highlight-color);
+  font-family: var(--secondary-font);
+}
+#closeModal {
+  margin-top: 15px;
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Rules */
+.body-rules {
+  background-image: url("/assets/image/farm_rules.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: var(--light-highlight-color);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.rules-container {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  max-width: 700px;
+  width: 100%;
+  text-align: center;
+  font-family: var(--primary-font);
+}
+.rules-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--secondary-color);
+}
+.rules-container p,
+.rules-container li {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+.rules-container ul {
+  padding-left: 1.2rem;
+  text-align: left;
+}
+.btn-group {
+  margin-top: 2rem;
+}
+.btn-custom {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  border-radius: 12px;
   background-color: var(--middle-color);
   color: white;
   border: none;
+  text-align: center;
+  text-decoration: none;
+  font-family: var(--secondary-font);
+  transition: background-color 0.3s, box-shadow 0.3s;
+  min-width: 160px; /* Valfritt, men säkrar samma bredd */
 }
 
-#restart_btn:hover {
-  background-color: #218838;
+.btn-custom:hover {
+  background-color: var(--highlight-color);
+  color: var(--primary-color);
+  box-shadow: 0 0 10px var(--highlight-color);
+}
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 /* Small screens */
@@ -181,144 +236,27 @@ body {
   .title {
     font-size: 1.5rem;
   }
-
   .card {
     max-width: 80px;
   }
-
   .game_info {
-    font-size: 1rem;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    text-align: center;
   }
-
   #restart_btn {
     font-size: 1rem;
     padding: 0.5rem 1rem;
   }
-}
-
-
-/* Hover effect on cards */
-.card:hover {
-  box-shadow: 0 0 15px var(--primary-color);
-}
-
-/* Style for flipped cards */
-.card.flipped {
-  background-color: var(--light-highlight-color);
-  transform: rotateY(180deg);
-}
-
-/* Restart button styling */
-#restart_btn {
-  margin-top: 20px;
-  background-color: var(--secondary-color);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-family: var(--secondary-font);
-  cursor: pointer;
-  border-radius: 5px;
-  transition: box-shadow 0.3s ease;
-}
-
-/* Hover effect on button */
-#restart_btn:hover {
-  box-shadow: 0 0 15px var(--highlight-color);
-}
-
-/* Set consistent size for images inside cards */
-.card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Keeps proportions while filling card */
-  border-radius: 8px;
-}
-
-/* Win Modal styling */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content {
-    background-color: white;
-    margin: 15% auto;
-    padding: 20px;
-    border-radius: 10px;
-    width: 300px;
-    text-align: center;
-    box-shadow: 0 0 10px var(--highlight-color);
-    font-family: var(--secondary-font);
-}
-
-#closeModal {
-    margin-top: 15px;
-    background-color: var(--secondary-color);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-/* Rules page specific styles */
-
-
-.rules-container {
-  max-width: 600px;
-  padding: 2rem;
-  border-radius: 20px;
-  text-align: center;
-  position: absolute;
-  margin: 8rem auto 4rem;
-  font-family: var(--primary-font);
-  background-color: rgba(255, 255, 255, 0.8); 
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-}
-
-.rules-container h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
-  color: var(--secondary-color);
-}
-
-.rules-container p,
-.rules-container li {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  color: var(--primary-color);
-}
-
-.rules-container ul {
-  padding-left: 1.2rem;
-  text-align: left;
-}
-
-.btn-group {
-  margin-top: 2rem;
-}
-
-.btn-custom {
-  margin: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  font-size: 1.1rem;
-  border-radius: 12px;
-  font-family: var(--secondary-font);
-  background-color: var(--middle-color);
-  color: white;
-  text-decoration: none;
-  transition: background-color 0.3s, box-shadow 0.3s;
-  display: inline-block;
-}
-
-.btn-custom:hover {
-  background-color: var(--highlight-color);
-  color: var(--primary-color);
-  box-shadow: 0 0 10px var(--highlight-color);
+  .rules-container {
+    padding: 1.5rem;
+  }
+  .rules-container h1 {
+    font-size: 1.8rem;
+  }
+  .rules-container p,
+  .rules-container li {
+    font-size: 1rem;
+  }
 }
