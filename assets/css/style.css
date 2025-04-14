@@ -28,9 +28,26 @@ body {
 
 .body-rules {
   background-image: url("/assets/image/farm_rules.jpg");
-  background-size: cover;
-  background-position: center;
+  background-size: contain;
   background-repeat: no-repeat;
+  background-position: center;
+  background-color: var(--light-highlight-color);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+.rules-container {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  max-width: 700px;
+  width: 100%;
+  text-align: center;
+  font-family: var(--primary-font)
+  backdrop-filter: blur(5px);
 }
 
 .body-game {
