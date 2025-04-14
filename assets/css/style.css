@@ -23,6 +23,21 @@ body {
   margin: 0;
 }
 
+/*Welcome image*/
+.welcome-img {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 1.5rem;
+  border-radius: 20px;
+}
+/*Welcome image small screens*/
+@media (max-width: 576px){
+  .welcome-img {
+    max-width: 90%;
+  }
+}
+
 /* Main game container styling */
 .game-container {
   text-align: center;
