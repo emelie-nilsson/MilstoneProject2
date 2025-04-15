@@ -13,7 +13,7 @@ let isMuted = false;
 if (muteButton) {
   muteButton.addEventListener("click", () => {
     isMuted = !isMuted;
-    muteButton.textContent = isMuted ? "🔇 Ljud av" : "🔈 Ljud på";
+    muteButton.textContent = isMuted ? "🔇 Sound on" : "🔈 Sound off";
   });
 }
 
