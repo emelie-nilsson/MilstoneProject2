@@ -5,6 +5,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const moveCounter = document.getElementById("move_counter");
   const timer = document.getElementById("timer");
 
+  const muteButton = document.getElementById("mute-button");
+
+  // Audio setting
+let isMuted = false;
+
+if (muteButton) {
+  muteButton.addEventListener("click", () => {
+    isMuted = !isMuted;
+    muteButton.textContent = isMuted ? "🔇 Ljud av" : "🔈 Ljud på";
+  });
+}
+
   // Game state variables
   let flippedCards = [];
   let moves = 0;
@@ -116,10 +128,11 @@ document.addEventListener("DOMContentLoaded", () => {
       
         const fileName = frontImg.src.split("/").pop();
         const soundPath = soundMap[fileName];
-        if (soundPath) {
-          const sound = new Audio(soundPath);
-          sound.play();
-        }
+
+          if (soundPath && !isMuted) {
+            const sound = new Audio(soundPath);
+            sound.play();
+          }
       
         if (flippedCards.length === 2) {
           lockBoard = true;
