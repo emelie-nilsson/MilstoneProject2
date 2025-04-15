@@ -89,41 +89,45 @@ document.addEventListener("DOMContentLoaded", () => {
   function createCards() {
     cards.forEach((imgSrc) => {
       const card = document.createElement("div");
-      card.classList.add("card");
+      card.classList.add("memory-card");
 
-      const img = document.createElement("img");
-      img.src = imgSrc;
-      img.alt = "Farm animal";
-      img.style.display = "none";
-      img.classList.add("card-image");
-
-      // Handle card click
+      const frontImg = document.createElement("img");
+      frontImg.src = imgSrc;
+      frontImg.alt = "Farm animal";
+      frontImg.classList.add("front-face");
+      
+      const backImg = document.createElement("img");
+      backImg.src = "assets/image/card-front.jpg";
+      backImg.alt = "Card back";
+      backImg.classList.add("back-face");
+      
+      card.appendChild(frontImg);
+      card.appendChild(backImg);
+      
       card.addEventListener("click", () => {
-        if (lockBoard || img.style.display === "block" || card.classList.contains("matched")) return;
-
+        if (lockBoard || card.classList.contains("flip") || card.classList.contains("matched")) return;
+      
         if (!timerStarted) {
           timerStarted = true;
           startTimer();
         }
-
-        img.style.display = "block";
-        flippedCards.push({ card, img });
-
-        // Play animal sound
-        const fileName = img.src.split("/").pop();
+      
+        card.classList.add("flip");
+        flippedCards.push({ card, img: frontImg });
+      
+        const fileName = frontImg.src.split("/").pop();
         const soundPath = soundMap[fileName];
         if (soundPath) {
           const sound = new Audio(soundPath);
           sound.play();
         }
-
+      
         if (flippedCards.length === 2) {
           lockBoard = true;
           setTimeout(checkMatch, 800);
         }
       });
-
-      card.appendChild(img);
+      
       grid.appendChild(card);
     });
   }
