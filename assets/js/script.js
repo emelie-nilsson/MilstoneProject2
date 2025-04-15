@@ -71,11 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("winModal").style.display = "block";
       }
     } else {
-      // Not a match
       setTimeout(() => {
-        first.img.style.display = "none";
-        second.img.style.display = "none";
-      }, 300);
+        first.card.classList.remove("flip");
+        second.card.classList.remove("flip");
+      }, 800);
     }
 
     // Reset for next move
