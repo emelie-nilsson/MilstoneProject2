@@ -177,7 +177,7 @@ body {
 
 /* Rules */
 .body-rules {
-  background-image: url("/assets/image/farm_rules.jpg");
+  background-image: url("../image/farm_rules.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
