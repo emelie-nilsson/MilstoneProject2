@@ -1,3 +1,5 @@
+/* jshint esversion: 6 */
+
 document.addEventListener("DOMContentLoaded", () => {
   // DOM elements
   const grid = document.querySelector(".game_grid");
