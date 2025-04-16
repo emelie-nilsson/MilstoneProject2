@@ -11,6 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
 let isMuted = false;
 
 if (muteButton) {
+  /**
+   * Toggles the mute setting and updates the text on the button.
+   * 
+   * @event click
+   * @returns {void}
+   */
   muteButton.addEventListener("click", () => {
     isMuted = !isMuted;
     muteButton.textContent = isMuted ? "🔇 Sound on" : "🔈 Sound off";
@@ -58,7 +64,12 @@ if (muteButton) {
   const selectedImages = images.slice(0, 10);
   let cards = [...selectedImages, ...selectedImages];
 
-  // Timer function
+  
+  /**
+   * Starts the timer and updates every second.
+   * 
+   * @returns {void}
+   */
   function startTimer() {
     interval = setInterval(() => {
       seconds++;
@@ -68,7 +79,14 @@ if (muteButton) {
     }, 1000);
   }
 
-  // Check if the two flipped cards match
+  /**
+   * Checks if the two flipped cards are a match.
+   * If so, marks them as a match.
+   * If all pairs are matched, win modal shows.
+   * Otherwise, flips the cards back afer a delay.
+   * 
+   * @returns {void}
+   */
   function checkMatch() {
     const [first, second] = flippedCards;
 
@@ -95,8 +113,12 @@ if (muteButton) {
     moveCounter.textContent = moves;
     lockBoard = false;
   }
-
-  // Create all cards and add to game board
+/** 
+ * Creats memory cards and adds them to the game grid.
+ * Adds click event listeners to each card.
+ * 
+ * @returns {void}
+*/
   function createCards() {
     cards.forEach((imgSrc) => {
       const card = document.createElement("div");
@@ -115,6 +137,12 @@ if (muteButton) {
       card.appendChild(frontImg);
       card.appendChild(backImg);
       
+      /**
+       * When a card is clicked, it flipps, sound plays and match is checked.
+       * 
+       * @event click
+       * @returns {void}
+       */
       card.addEventListener("click", () => {
         if (lockBoard || card.classList.contains("flip") || card.classList.contains("matched")) return;
       
@@ -143,8 +171,11 @@ if (muteButton) {
       grid.appendChild(card);
     });
   }
-
-  // Reset the whole game
+/**
+ * Reset the whole game (timer, move counter, board, cards).
+ * 
+ * @returns {void}
+ */
   function resetGame() {
     clearInterval(interval);
     seconds = 0;
@@ -156,23 +187,28 @@ if (muteButton) {
     flippedCards = [];
     lockBoard = false;
 
-    // Shuffle and rebuild
     cards.sort(() => Math.random() - 0.5);
     grid.innerHTML = "";
     createCards();
 
-    // Hide win modal
     document.getElementById("winModal").style.display = "none";
   }
-
-  // Restart button
+/**
+ * Restarts the game when restart botton is clicked.
+ * 
+ * @event click
+ */
   restartbtn.addEventListener("click", resetGame);
 
-  // Start game on page load
   resetGame();
 
-  // Close modal with X button
+ /**
+  * Closes the win modal when the close button id clicked.
+  * 
+  * @event click
+  */
   document.getElementById("closeModal").addEventListener("click", () => {
     document.getElementById("winModal").style.display = "none";
+    resetGame();
   });
 });
