@@ -10,20 +10,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const muteButton = document.getElementById("mute-button");
 
   // Audio setting
-let isMuted = false;
+  let isMuted = false;
 
-if (muteButton) {
-  /**
-   * Toggles the mute setting and updates the text on the button.
-   * 
-   * @event click
-   * @returns {void}
-   */
-  muteButton.addEventListener("click", () => {
-    isMuted = !isMuted;
-    muteButton.textContent = isMuted ? "🔇 Sound on" : "🔈 Sound off";
-  });
-}
+  if (muteButton) {
+    /**
+    * Toggles the mute setting and updates the text on the button.
+    * 
+    * @event click
+    * @returns {void}
+    */
+    muteButton.addEventListener("click", () => {
+      isMuted = !isMuted;
+      muteButton.textContent = isMuted ? "🔇 Sound on" : "🔈 Sound off";
+    });
+  }
 
   // Game state variables
   let flippedCards = [];
@@ -66,7 +66,7 @@ if (muteButton) {
   const selectedImages = images.slice(0, 10);
   let cards = [...selectedImages, ...selectedImages];
 
-  
+
   /**
    * Starts the timer and updates every second.
    * 
@@ -115,12 +115,12 @@ if (muteButton) {
     moveCounter.textContent = moves;
     lockBoard = false;
   }
-/** 
- * Creats memory cards and adds them to the game grid.
- * Adds click event listeners to each card.
- * 
- * @returns {void}
-*/
+  /** 
+   * Creats memory cards and adds them to the game grid.
+   * Adds click event listeners to each card.
+   * 
+   * @returns {void}
+  */
   function createCards() {
     cards.forEach((imgSrc) => {
       const card = document.createElement("div");
@@ -130,15 +130,15 @@ if (muteButton) {
       frontImg.src = imgSrc;
       frontImg.alt = "Farm animal";
       frontImg.classList.add("front-face");
-      
+
       const backImg = document.createElement("img");
       backImg.src = "assets/image/card-front.jpg";
       backImg.alt = "Card back";
       backImg.classList.add("back-face");
-      
+
       card.appendChild(frontImg);
       card.appendChild(backImg);
-      
+
       /**
        * When a card is clicked, it flipps, sound plays and match is checked.
        * 
@@ -147,37 +147,37 @@ if (muteButton) {
        */
       card.addEventListener("click", () => {
         if (lockBoard || card.classList.contains("flip") || card.classList.contains("matched")) return;
-      
+
         if (!timerStarted) {
           timerStarted = true;
           startTimer();
         }
-      
+
         card.classList.add("flip");
         flippedCards.push({ card, img: frontImg });
-      
+
         const fileName = frontImg.src.split("/").pop();
         const soundPath = soundMap[fileName];
 
-          if (soundPath && !isMuted) {
-            const sound = new Audio(soundPath);
-            sound.play();
-          }
-      
+        if (soundPath && !isMuted) {
+          const sound = new Audio(soundPath);
+          sound.play();
+        }
+
         if (flippedCards.length === 2) {
           lockBoard = true;
           setTimeout(checkMatch, 800);
         }
       });
-      
+
       grid.appendChild(card);
     });
   }
-/**
- * Reset the whole game (timer, move counter, board, cards).
- * 
- * @returns {void}
- */
+  /**
+   * Reset the whole game (timer, move counter, board, cards).
+   * 
+   * @returns {void}
+   */
   function resetGame() {
     clearInterval(interval);
     seconds = 0;
@@ -195,20 +195,20 @@ if (muteButton) {
 
     document.getElementById("winModal").style.display = "none";
   }
-/**
- * Restarts the game when restart botton is clicked.
- * 
- * @event click
- */
+  /**
+   * Restarts the game when restart botton is clicked.
+   * 
+   * @event click
+   */
   restartbtn.addEventListener("click", resetGame);
 
   resetGame();
 
- /**
-  * Closes the win modal when the close button id clicked.
-  * 
-  * @event click
-  */
+  /**
+   * Closes the win modal when the close button id clicked.
+   * 
+   * @event click
+   */
   document.getElementById("closeModal").addEventListener("click", () => {
     document.getElementById("winModal").style.display = "none";
     resetGame();
