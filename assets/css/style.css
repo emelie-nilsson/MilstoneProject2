@@ -245,7 +245,7 @@ body {
   text-decoration: none;
   font-family: var(--secondary-font);
   transition: background-color 0.3s, box-shadow 0.3s;
-  min-width: 160px; /* Valfritt, men säkrar samma bredd */
+  min-width: 160px; 
 }
 
 .btn-custom:hover {
@@ -258,6 +258,32 @@ body {
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
+}
+
+/* 404 page */
+body.page-404 {
+  background-color: var(--light-highlight-color);
+  color: var(--primary-color);
+  text-align: center;
+  padding: 50px;
+}
+
+.error-img {
+  width: 200px;
+  margin: 20px 0;
+}
+
+.page-404 .btn {
+  background-color: var(--middle-color);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.page-404 .btn:hover {
+  background-color: var(--highlight-color);
 }
 
 /* Small screens */
