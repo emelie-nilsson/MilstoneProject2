@@ -13,12 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let isMuted = false;
 
   if (muteButton) {
-    /**
-    * Toggles the mute setting and updates the text on the button.
-    * 
-    * @event click
-    * @returns {void}
-    */
     muteButton.addEventListener("click", () => {
       isMuted = !isMuted;
       muteButton.textContent = isMuted ? "🔇 Sound on" : "🔈 Sound off";
